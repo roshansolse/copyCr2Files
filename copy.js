@@ -1,17 +1,17 @@
 const path = require("path");
 const fs = require("fs");
-const filePaths = require("./path.json");
 
+const filePaths = "SELECTED/Vinat Sweety Wedding Candid Photos JPG"
+const fileType = "CR3"
 const selectedPhotosList = [];
+const directoryPath = path.join(__dirname, filePaths);
 
-const directoryPath = path.join(__dirname, filePaths.selectedPhotosPath);
-
-fs.readdir(directoryPath, async function(err, files) {
+fs.readdir(directoryPath, async function (err, files) {
     if (err) {
         return console.log("Unable to scan directory: " + err);
     }
 
-    files.forEach(function(file) {
+    files.forEach(function (file) {
         if (file.includes(".jpg") || file.includes(".JPG")) {
             selectedPhotosList.push(file.split(".")[0]);
         }
@@ -25,8 +25,8 @@ fs.readdir(directoryPath, async function(err, files) {
     }
 
     for (const file of selectedPhotosList) {
-        const rawFile = `Raw Photos/${file}.CR2`;
-        const toEditPath = `To Edit/${file}.CR2`;
+        const rawFile = `Raw Photos/${file}.${fileType}`;
+        const toEditPath = `To Edit/${file}.${fileType}`;
         fs.copyFile(rawFile, toEditPath, err => {
             if (err) throw err;
             console.log("file copied");
